@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
-namespace WebApplication1.Hubs
+namespace WebApplication1
 {
     [HubName("hitCounter")]
     public class HitcounterHub : Hub
@@ -29,10 +25,6 @@ namespace WebApplication1.Hubs
             _hitCount -= 1;
             Clients.All.updateHitCount(_hitCount);
             return base.OnDisconnected();
-            //WOW!!!!!
         }
-
-        /* the "hello world" if SignalR apps is Chat */
-
     }
 }

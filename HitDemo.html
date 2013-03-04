@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html> 
+<html> 
 <head>
     <title></title>
     <script src="Scripts/jquery-1.6.4.min.js"></script>
@@ -10,18 +10,17 @@
             var hub = cn.createHubProxy('hitCounter'); 
             /* hub.on -> event handler, function... i.e. when the server raises this event then calls this JavaScript function */
             hub.on('updateHitCount', function(i) {
-                $('#hitCount').val(i);
+                $('#hitCount').text(i);
             });
             /* start... in essence it creates / maintains a connection */
             cn.start(function() {
                 hub.invoke('recordHit');
             });
-            /*  */
         });
     </script>
 </head>
 <body>
-    <input type="text" id="hitCount" />
+    <div id="hitCount" />
 </body>
 
 </html>
