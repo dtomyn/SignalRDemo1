@@ -76,6 +76,8 @@
     <Content Include="ChatDemo.html" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\SignalRDemo1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\SignalRDemo1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
