@@ -3,21 +3,35 @@
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title></title>
+    <script src="Scripts/json2.min.js"></script>
     <script src="Scripts/jquery-1.6.4.min.js"></script>
     <script src="Scripts/jquery.signalR-1.0.1.js"></script>
+    <script src="/signalr/hubs"></script> 
     <script>
-        $(function() {
-            var cn = $.hubConnection();
-            var hub = cn.createHubProxy('hitCounter'); 
-            /* hub.on -> event handler, function... i.e. when the server raises this event then calls this JavaScript function */
-            hub.on('updateHitCount', function(i) {
-                $('#hitCount').text(i);
-            });
-            /* start... in essence it creates / maintains a connection */
-            cn.start(function() {
-                hub.invoke('recordHit');
-            });
-        });
+$(function () {
+    /* using SignalR JavaScript library, setup the connection */
+    var cn = $.hubConnection();
+    /* 
+    next, using SignalR JavaScript library, create a "proxy" that 
+    you can either send stuff to or receive stuff from 
+    */
+    var hub = cn.createHubProxy('hitCounter');
+    /* 
+    setup a listener from the hub to this web page... 
+    so, whenever the server raises an event called 'updateHitCount' 
+    the text for the div 'recordHit' will be adjusted
+    */
+    hub.on('updateHitCount', function(i) {
+        $('#hitCount').text(i);
+    });
+    /* 
+    start the connection... 
+    this creates and maintains a real-time connection 
+    */
+    cn.start(function() {
+        hub.invoke('recordHit');
+    });
+});
     </script>
 </head>
 <body>
