@@ -11,6 +11,7 @@ namespace WebApplication1
         {
             // Register the default hubs route: ~/signalr/hubs 
             RouteTable.Routes.MapHubs();
+//            TrackerConnection.InitRoute();
         }
 
         protected void Session_Start(object sender, EventArgs e)
