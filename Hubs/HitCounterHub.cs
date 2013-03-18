@@ -15,7 +15,8 @@ public class HitcounterHub : Hub
     //server method that can be invoked by JavaScript
     public void RecordHit()
     {
-        _hitCount += 1;
+        //_hitCount += 1;
+        System.Threading.Interlocked.Increment(ref _hitCount);
         //note... this is a dynamic method... think of the method as an event
         Clients.All.updateHitCount(_hitCount);
         //when this event fires on the server there is going to be a JavaScript 
@@ -31,7 +32,8 @@ public class HitcounterHub : Hub
     public override Task OnDisconnected()
     {
         //decrease the counter
-        _hitCount -= 1;
+        //_hitCount -= 1;
+        System.Threading.Interlocked.Decrement(ref _hitCount);
         //send a message back to all of the connected clients
         Clients.All.updateHitCount(_hitCount);
         return base.OnDisconnected();
