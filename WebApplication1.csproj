@@ -74,11 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ChatDemo.html" />
+    <Content Include="DrawingBoard.html" />
     <Content Include="Global.asax" />
+    <Content Include="MouseTracking.htm" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\SignalRDemo1 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\SignalRDemo1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\drawingboard.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-1.0.1.js" />
@@ -86,6 +89,7 @@
     <Content Include="HitDemo.html" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\tracking.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +97,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\DrawingBoard.cs" />
     <Compile Include="Hubs\HitCounterHub.cs" />
+    <Compile Include="Hubs\TrackerConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

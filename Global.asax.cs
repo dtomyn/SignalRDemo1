@@ -1,6 +1,7 @@
 ﻿using System.Web.Routing;
 using Microsoft.AspNet.SignalR;
-using System; 
+using System;
+using WebApplication1.Hubs; 
 
 namespace WebApplication1
 {
@@ -11,7 +12,7 @@ namespace WebApplication1
         {
             // Register the default hubs route: ~/signalr/hubs 
             RouteTable.Routes.MapHubs();
-//            TrackerConnection.InitRoute();
+            TrackerConnection.InitRoute();
         }
 
         protected void Session_Start(object sender, EventArgs e)
