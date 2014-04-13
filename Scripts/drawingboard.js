@@ -5,20 +5,56 @@
     /////////////////////////////////////////////////////////////////////////
     var canvas = $("#canvas");
     var buttonPressed = false;
+    //original... only worked if had a mouse... what about iPads??
+    //canvas
+    //    .mousedown(function () {
+    //        buttonPressed = true;
+    //    })
+    //    .mouseup(function () {
+    //        buttonPressed = false;
+    //    })
+    //    .mousemove(function (e) {
+    //        if (buttonPressed) {
+    //            setPoint(e.offsetX, e.offsetY, $("#color").val());
+    //        }
+    //    });
+    //let's see if this will work
     canvas
-        .mousedown(function () {
+        .bind("mousedown", function (e) {
             buttonPressed = true;
         })
-        .mouseup(function () {
+        .bind("touchstart", function (e) {
+            if (e.preventDefault) e.preventDefault();
+            buttonPressed = true;
+        })
+        .bind("mouseup", function (e) {
             buttonPressed = false;
         })
-        .mousemove(function (e) {
+        .bind("touchend", function (e) {
+            buttonPressed = false;
+        })
+        .bind("touchmove", function (e) {
+            if (buttonPressed) {
+                if (e.preventDefault) e.preventDefault();
+
+                //setPoint(e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY, $("#color").val());
+                setPoint(
+                    e.originalEvent.changedTouches[0].pageX - e.originalEvent.changedTouches[0].target.offsetLeft
+                    , e.originalEvent.changedTouches[0].pageY - e.originalEvent.changedTouches[0].target.offsetTop
+                    , $("#color").val());
+                //e.originalEvent.changedTouches[0]
+                //setPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY, $("#color").val());
+            }
+        })
+        .bind("mousemove", function (e) {
             if (buttonPressed) {
                 setPoint(e.offsetX, e.offsetY, $("#color").val());
             }
         });
 
     var ctx = canvas[0].getContext("2d");
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
     function setPoint(x, y, color) {
         ctx.fillStyle = color;
         ctx.beginPath();

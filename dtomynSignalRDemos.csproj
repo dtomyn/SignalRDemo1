@@ -74,10 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ChatDemo.html" />
+    <Content Include="Default.html" />
     <Content Include="DrawingBoard.html" />
     <Content Include="Global.asax" />
     <Content Include="MouseTracking.htm" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\dtomynSignalRDemos - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dtomynSignalRDemos - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SignalRDemo1 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\SignalRDemo1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />

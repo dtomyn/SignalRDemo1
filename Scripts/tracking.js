@@ -16,7 +16,13 @@ function startTracking() {
     $("body").mousemove(function (e) {
         var data = { x: e.pageX, y: e.pageY, id: connection.id };
         connection.send(JSON.stringify(data));
-    });
+    })
+    .bind("touchmove", function (e) {
+        if (e.preventDefault) e.preventDefault();
+        var data = { x: e.originalEvent.changedTouches[0].pageX, y: e.originalEvent.changedTouches[0].pageY, id: connection.id };
+        connection.send(JSON.stringify(data));
+    })
+    ;
 }
 
 /* Helper functions */
