@@ -3,10 +3,10 @@
     /////////////////////////////////////////////////////////////////////////
     // Standard drawing board functionalities
     /////////////////////////////////////////////////////////////////////////
-    var canvas = $("#canvas");
+    var $canvas = $("#canvas");
     var buttonPressed = false;
     //original... only worked if had a mouse... what about iPads??
-    //canvas
+    //$canvas
     //    .mousedown(function () {
     //        buttonPressed = true;
     //    })
@@ -19,7 +19,7 @@
     //        }
     //    });
     //let's see if this will work
-    canvas
+    $canvas
         .bind("mousedown", function (e) {
             buttonPressed = true;
         })
@@ -37,13 +37,10 @@
             if (buttonPressed) {
                 if (e.preventDefault) e.preventDefault();
 
-                //setPoint(e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY, $("#color").val());
                 setPoint(
                     e.originalEvent.changedTouches[0].pageX - e.originalEvent.changedTouches[0].target.offsetLeft
                     , e.originalEvent.changedTouches[0].pageY - e.originalEvent.changedTouches[0].target.offsetTop
                     , $("#color").val());
-                //e.originalEvent.changedTouches[0]
-                //setPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY, $("#color").val());
             }
         })
         .bind("mousemove", function (e) {
@@ -52,7 +49,7 @@
             }
         });
 
-    var ctx = canvas[0].getContext("2d");
+    var ctx = $canvas[0].getContext("2d");
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
     function setPoint(x, y, color) {
@@ -60,9 +57,14 @@
         ctx.beginPath();
         ctx.arc(x, y, 2, 0, Math.PI * 2);
         ctx.fill();
+        //now call method to broadcast this
+        if (buttonPressed && connected) {
+            hub.server.broadcastPoint(
+                x, y);
+        }
     }
     function clearPoints() {
-        ctx.clearRect(0, 0, canvas.width(), canvas.height());
+        ctx.clearRect(0, 0, $canvas.width(), $canvas.height());
     }
 
     $("#clear").click(function () {
@@ -81,7 +83,7 @@
     $("#color").change(function () {
         hub.state.color = $(this).val();
     });
-    canvas.mousemove(function (e) {
+    $canvas.mousemove(function (e) {
         if (buttonPressed && connected) {
             hub.server.broadcastPoint(e.offsetX, e.offsetY);
         }
@@ -100,10 +102,28 @@
         setPoint(x, y, color);
     };
 
+    setTimeout(startConnection, 10000);
+
+    function startConnection() {
+        $canvas.show();
+        $.connection.hub
+            /*.start({ transport: 'longPolling' })*/
+            /*.start({ transport: 'foreverFrame' })*/
+            .start()
+            .done(function () {
+                connected = true;
+                $('#connecting').hide();
+                $('#connected').show().text('Now connected! Connection ID = ' + $.connection.hub.id + ' with transport ' + $.connection.hub.transport.name);
+            })
+            .fail(function (error) {
+                $('#connecting').hide();
+                $('#connected').show().text('Could not connect! Error ' + error);
+            })
+            ;
+    }
+
+
     // Voila!
-    $.connection.hub.start()
-        .done(function () {
-            connected = true;
-        });
+    //    
 
 });
